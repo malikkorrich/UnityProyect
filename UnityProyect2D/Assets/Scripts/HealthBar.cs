@@ -18,6 +18,7 @@ public class healthBar : MonoBehaviour
 
         //para comprobar que valor del slider inicia con el tamaño del parametro helth
         slider.value = health;
+        
     }
 
 
@@ -29,4 +30,9 @@ public class healthBar : MonoBehaviour
 
         slider.value = health;
     }
+
+ 
+
+
+    
 }
