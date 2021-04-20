@@ -38,12 +38,7 @@ public class Torre : MonoBehaviour
     void Update()
     {
 
-        //este condicion para probar el daño 
-        if (Input.GetKey(KeyCode.Space))
-        {
-
-            takeDamage(5);
-        }
+        
 
  
     }
@@ -54,10 +49,28 @@ public class Torre : MonoBehaviour
     public void takeDamage(int damage)
     {
         currentHealth -= damage;
+        //animator.SetTrigger("Dano");
 
         //cuando se da daño cambiamos el valor del health o slider
         healthBar.SetHealth(currentHealth);
+        if (currentHealth <= 0)
+        {
+            destroyTower();
+        }
+
     }
 
+
+    private void destroyTower()
+    {
+        //die animation
+        Debug.Log("Tower Destroyed !");
+         
+        //disable the enemy
+        //1. disbale the component boxcolider
+        GetComponent<BoxCollider2D>().enabled = false;
+        //2. disbale the script
+        this.enabled = false;
+    }
 
 }

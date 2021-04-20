@@ -28,6 +28,14 @@ public class Personaje : MonoBehaviour
     //layer to detect enemigos
     public LayerMask enemigoLayers;
 
+
+    //var para limitar el tiempo del ataque
+    //Cuantas veces va atacar en el segundo
+    public float attackRate = 2f;
+    //va guaradar el tiempo para atacar proxima vez
+    float nextAttackTime = 0f;
+
+
     //set y get
     public int MaxHealth
     {
@@ -54,9 +62,16 @@ public class Personaje : MonoBehaviour
     {
 
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Atacar();
+        //limitar el tiempo de ataque
+        if (Time.time >= nextAttackTime) {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                 
+                Atacar();
+                nextAttackTime = Time.time + 1f / attackRate;
+            }
         }
+       
 
         //Mover el personaje la derecha
         transform.Translate(new Vector3(0.1f, 0.0f));
@@ -71,9 +86,13 @@ public class Personaje : MonoBehaviour
     //metodo para hacer daño
     public void takeDamage(int damage) {
         currentHealth -= damage;
+        animator.SetTrigger("Dano");
 
         //cuando se da daño cambiamos el valor del health o slider
         healthBar.SetHealth(currentHealth);
+        if (currentHealth <= 0) {
+            Die();
+        }
         
            }
 
@@ -90,6 +109,10 @@ public class Personaje : MonoBehaviour
         //damage them
         foreach (Collider2D enemigo in hitEnemigos) {
             Debug.Log(" we Hit enemy:" + enemigo.name);
+            //access to all enemy and damage them
+            enemigo.GetComponent<Enemigo>().takeDamage(30);
+
+
         }
 
     }
@@ -103,7 +126,21 @@ public class Personaje : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+      //  if (collision.gameObject.tag == "") { }
+    }
+
+
+
+    //die method
+    void Die() {
+        //die animation
+        Debug.Log("Enemy Died !");
+        animator.SetBool("Muerte", true);
+        //disable the enemy
+        //1. disbale the component boxcolider
+        GetComponent<BoxCollider2D>().enabled = false;
+        //2. disbale the script
+        this.enabled = false;
     }
 
 }
