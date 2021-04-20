@@ -77,10 +77,10 @@ public class Enemigo : MonoBehaviour
         }
 
 
-        
+       
         //Mover el personaje la derecha
         transform.Translate(new Vector3(-0.5f, 0.0f));
-        
+     
     }
 
 
@@ -141,12 +141,10 @@ public class Enemigo : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Personaje")
+      /*  if (collision.gameObject.tag == "Personaje")
         {
-            Debug.Log("Enemigo ha colisionado con el personaje");
-          
-            
-        }
+            keepMoving = false; 
+        }*/
     }
 
 
