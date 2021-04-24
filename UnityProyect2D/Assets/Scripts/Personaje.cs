@@ -27,6 +27,7 @@ public class Personaje : MonoBehaviour
 
     //layer to detect enemigos
     public LayerMask enemigoLayers = 256;
+    public LayerMask personajeLayer;
 
 
     //var para limitar el tiempo del ataque
@@ -106,6 +107,35 @@ public class Personaje : MonoBehaviour
              //   Debug.DrawRay(transform.position + Vector3.right , Vector2.right , Color.green,20f);
             
             
+        }
+        //Detecccion aliados
+
+        personajeLayer = LayerMask.GetMask("Personaje");
+        RaycastHit2D hit2;
+        hit2 = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 20f, personajeLayer);
+
+        Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.red, 20f);
+
+
+        if (hit2)
+        {
+            Debug.Log("Aliado detectado: " + hit2.collider.name);
+
+
+
+            //funcion para calcular una distancia entre dos puntos, el punto dond esta colisionado el rayo menos el punto donde esta situado el personaje 
+            distancia = Vector2.Distance(hit2.point, transform.position);
+            Debug.Log("distancia: " + distancia);
+            if (distancia < 5f)
+            {
+                //cuando estamos en distancia de ataque paramos de correr
+                animator.SetBool("Correr", false);
+                Debug.Log("Distancia de ataque Aliado");
+                animator.SetBool("Idle", true);
+
+            }
+
+
         }
 
 
