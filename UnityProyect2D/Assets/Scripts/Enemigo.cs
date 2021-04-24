@@ -40,7 +40,9 @@ public class Enemigo : MonoBehaviour
      
     //var flag para mover o dejar mover 
     public bool keepMoving = true;
+    LayerMask aliadoLayer;
     
+    public float distancia;
 
     //set y get
     public int MaxHealth
@@ -65,22 +67,51 @@ public class Enemigo : MonoBehaviour
     void Update()
     {
 
-        //limitar el tiempo de ataque
-        if (Time.time >= nextAttackTime)
+        //Pruebas raycast 
+        aliadoLayer = LayerMask.GetMask("Personaje");
+        RaycastHit2D hit;
+        hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 20f, aliadoLayer);
+        Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.green, 20f);
+        if (hit)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+
+            Debug.Log("detectado: " + hit.collider.name);
+            if (hit.transform.tag == "Personaje" | hit.transform.tag == "Torre")  //  hit.collider.gameObject.layer == enemigoLayer  se puede hacer esto en lugar de comprobar el tag
             {
+                //si detectamos enemigo y todavia no estamos en distancia de ataque corremos
+                animator.SetBool("Correr", true);
+                //debug para ver el rayo
+                Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.red, 20f);
+                //funcion para calcular una distancia entre dos puntos, el punto dond esta colisionado el rayo menos el punto donde esta situado el personaje 
+                distancia = Vector2.Distance(hit.point, transform.position);
+                //  Debug.Log("distancia: " + distancia);
+                if (distancia < 2f)
+                {
+                    //cuando estamos en distancia de ataque paramos de correr
+                    animator.SetBool("Correr", false);
+                    Debug.Log("Distancia de ataque");
+                    if (Time.time >= nextAttackTime)
+                    {
+                        //   animator.SetTrigger("Atacar");
+                        Atacar();
+                        nextAttackTime = Time.time + 1f / attackRate;
 
-                Atacar();
-                nextAttackTime = Time.time + 1f / attackRate;
+
+                    }
+
+                }
+
             }
+            if (animator.GetBool("Correr") == true)
+            {
+                transform.Translate(new Vector3(-0.1f, 0.0f));
+            }
+
+
+            //Mover el personaje la derecha
+            //    transform.Translate(new Vector3(-0.5f, 0.0f));
+
         }
-
-
-       
-        //Mover el personaje la derecha
-    //    transform.Translate(new Vector3(-0.5f, 0.0f));
-     
     }
 
 
@@ -104,22 +135,40 @@ public class Enemigo : MonoBehaviour
 
     void Atacar()
     {
+        animator.SetBool("Correr", false);
+        animator.SetBool("Idle", true);
         //play attack animation
-        animator.SetTrigger("Atacar");
+        // animator.SetTrigger("Atacar");
         //detect enemies in range of attack
         //se crea un circulo en la posicion de ataque que va detecter los layers de los objetos que colisiona con este circulo
         //se crea una array de colider para guardar los objetos que se han colisionado
-        Collider2D[] hitEnemigos = Physics2D.OverlapCircleAll(posicionAtaque.position, rangoAtaque, enemigoLayers);
+        Collider2D[] hitAliados = Physics2D.OverlapCircleAll(posicionAtaque.position, rangoAtaque, aliadoLayer);
 
 
         //damage them
-        foreach (Collider2D enemigo in hitEnemigos)
+        foreach (Collider2D enemigo in hitAliados)
         {
             Debug.Log(" we Hit enemy:" + enemigo.name);
             //access to all enemy and damage them
-            enemigo.GetComponent<Personaje>().takeDamage(100);
+            animator.SetTrigger("Atacar");
+            if (enemigo.attachedRigidbody.gameObject.tag == "Personaje")
+            {
+                enemigo.GetComponent<Personaje>().takeDamage(30);
+            }
+            if (enemigo.attachedRigidbody.gameObject.tag == "Torre")
+            {
+                enemigo.GetComponent<Torre>().takeDamage(30);
+            }
 
 
+
+            /*   if(  enemigo.GetComponent<Enemigo>().healthBar.slider.value <= 0){
+                     isColliding = false;
+                     animator.SetBool("Correr", true);
+                     animator.SetBool("Atacar", false);
+                     animator.SetBool("Idle", false);
+
+                 }*/
         }
 
     }

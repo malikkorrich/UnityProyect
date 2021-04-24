@@ -815,6 +815,7 @@ MonoBehaviour:
     m_Bits: 512
   attackRate: 2
   keepMoving: 1
+  distancia: 0
 --- !u!50 &568257578
 Rigidbody2D:
   serializedVersion: 4
@@ -1079,6 +1080,7 @@ MonoBehaviour:
     m_Bits: 512
   attackRate: 2
   keepMoving: 1
+  distancia: 0
 --- !u!95 &656491223
 Animator:
   serializedVersion: 3
@@ -1339,7 +1341,7 @@ GameObject:
   - component: {fileID: 946245629}
   - component: {fileID: 946245628}
   - component: {fileID: 946245627}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1930,7 +1932,7 @@ GameObject:
   - component: {fileID: 1148494596}
   - component: {fileID: 1148494595}
   - component: {fileID: 1148494599}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Torre1
   m_TagString: Torre
   m_Icon: {fileID: 0}
@@ -2072,7 +2074,7 @@ GameObject:
   - component: {fileID: 1162340233}
   - component: {fileID: 1162340232}
   - component: {fileID: 1162340231}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2242,7 +2244,7 @@ GameObject:
   - component: {fileID: 1279612475}
   - component: {fileID: 1279612477}
   - component: {fileID: 1279612476}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2314,7 +2316,7 @@ GameObject:
   - component: {fileID: 1334098677}
   - component: {fileID: 1334098679}
   - component: {fileID: 1334098678}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}

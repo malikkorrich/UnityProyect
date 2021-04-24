@@ -71,16 +71,16 @@ public class Personaje : MonoBehaviour
         enemigoLayer = LayerMask.GetMask("Enemigo");
         RaycastHit2D hit;
         hit = Physics2D.Raycast(transform.position +Vector3.right , Vector2.right ,20f,enemigoLayer);
-        Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.green, 20f);
+     //   Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.green, 20f);
         if (hit){
 
-         Debug.Log("detectado: " + hit.collider.name);
+     //    Debug.Log("detectado: " + hit.collider.name);
             if (hit.transform.tag == "Enemigo" | hit.transform.tag=="Torre")  //  hit.collider.gameObject.layer == enemigoLayer  se puede hacer esto en lugar de comprobar el tag
             {
                 //si detectamos enemigo y todavia no estamos en distancia de ataque corremos
                 animator.SetBool("Correr", true);
                 //debug para ver el rayo
-                Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.red, 20f);
+              //  Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.red, 20f);
                //funcion para calcular una distancia entre dos puntos, el punto dond esta colisionado el rayo menos el punto donde esta situado el personaje 
                 distancia = Vector2.Distance(hit.point, transform.position);
               //  Debug.Log("distancia: " + distancia);
