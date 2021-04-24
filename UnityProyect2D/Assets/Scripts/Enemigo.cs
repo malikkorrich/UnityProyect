@@ -42,7 +42,8 @@ public class Enemigo : MonoBehaviour
     public bool keepMoving = true;
     LayerMask aliadoLayer;
     
-    public float distancia;
+    public float distanciaEnemigo;
+    public float distanciaAliado;
 
     //set y get
     public int MaxHealth
@@ -83,9 +84,9 @@ public class Enemigo : MonoBehaviour
                 //debug para ver el rayo
                 Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.red, 20f);
                 //funcion para calcular una distancia entre dos puntos, el punto dond esta colisionado el rayo menos el punto donde esta situado el personaje 
-                distancia = Vector2.Distance(hit.point, transform.position);
+                distanciaEnemigo = Vector2.Distance(hit.point, transform.position);
                 //  Debug.Log("distancia: " + distancia);
-                if (distancia < 2f)
+                if (distanciaEnemigo < 2f)
                 {
                     //cuando estamos en distancia de ataque paramos de correr
                     animator.SetBool("Correr", false);
@@ -110,6 +111,40 @@ public class Enemigo : MonoBehaviour
 
             //Mover el personaje la derecha
             //    transform.Translate(new Vector3(-0.5f, 0.0f));
+
+        }
+
+        //Detecccion aliados
+
+        aliadoLayer = LayerMask.GetMask("Enemigo");
+        RaycastHit2D hit2;
+        hit2 = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 20f, aliadoLayer);
+
+        Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.red, 20f);
+
+
+        if (hit2)
+        {
+            if (hit2.transform.tag == "Enemigo")
+            {
+                Debug.Log("detectado aliado: " + hit2.collider.name);
+
+                distanciaAliado = Vector2.Distance(hit2.point, transform.position);
+                Debug.Log("distancia con aliado : " + distanciaAliado);
+                if (distanciaAliado < 3f)
+                {
+                    animator.SetBool("Correr", false);
+                    animator.SetBool("Idle", true);
+
+                }
+                else
+                {
+                    animator.SetBool("Correr", true);
+                    animator.SetBool("Idle", false);
+                }
+            }
+
+
 
         }
     }

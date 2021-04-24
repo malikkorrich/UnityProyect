@@ -105,16 +105,7 @@ public class Personaje : MonoBehaviour
             }
             else
             {
-                Debug.Log("detectado aliado: " + hit.collider.name);
 
-                distanciaAliado = Vector2.Distance(hit.point, transform.position);
-                Debug.Log("distancia con aliado : " + distanciaAliado);
-                if (distanciaAliado < 3f)
-                {
-                    animator.SetBool("Correr", false);
-                    animator.SetBool("Idle", true);
-
-                }
             }
 
             //   Debug.DrawRay(transform.position + Vector3.right , Vector2.right , Color.green,20f);
@@ -122,37 +113,40 @@ public class Personaje : MonoBehaviour
 
         }
 
- /*   
- //Detecccion aliados
+ 
+    //Detecccion aliados
 
         personajeLayer = LayerMask.GetMask("Personaje");
         RaycastHit2D hit2;
-        hit2 = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 20f, personajeLayer);
+        hit2 = Physics2D.Raycast(transform.position + Vector3.right , Vector2.right, 20f, personajeLayer);
 
-        Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.red, 20f);
+        Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.red, 20f);
 
 
         if (hit2)
         {
-            Debug.Log("Aliado detectado: " + hit2.collider.name);
-
-
-
-            //funcion para calcular una distancia entre dos puntos, el punto dond esta colisionado el rayo menos el punto donde esta situado el personaje 
-            distancia = Vector2.Distance(hit2.point, transform.position);
-            Debug.Log("distancia: " + distancia);
-            if (distancia < 3f)
+            if (hit2.transform.tag == "Personaje")
             {
-          //      hit2.transform.gameObject.GetComponent<Personaje>().activarIdle();
-                //cuando estamos en distancia de ataque paramos de correr
-            //    hit2.transform.gameObject.GetComponent<Personaje>().activarCorrer();
-                Debug.Log("Distancia de ataque Aliado");
-              
+                Debug.Log("detectado aliado: " + hit2.collider.name);
 
+                distanciaAliado = Vector2.Distance(hit2.point, transform.position);
+                Debug.Log("distancia con aliado : " + distanciaAliado);
+                if (distanciaAliado < 3f)
+                {
+                    animator.SetBool("Correr", false);
+                    animator.SetBool("Idle", true);
+
+                }
+                else
+                {
+                    animator.SetBool("Correr", true);
+                    animator.SetBool("Idle", false);
+                }
             }
+        
 
 
-        } */
+        } 
 
 
         /*
