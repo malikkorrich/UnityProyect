@@ -26,7 +26,7 @@ public class Personaje : MonoBehaviour
     public float rangoAtaque = 0.5f;
 
     //layer to detect enemigos
-    public LayerMask enemigoLayers;
+    public LayerMask enemigoLayers = 256;
 
 
     //var para limitar el tiempo del ataque
@@ -35,6 +35,9 @@ public class Personaje : MonoBehaviour
     //va guaradar el tiempo para atacar proxima vez
     float nextAttackTime = 0f;
 
+    LayerMask enemigoLayer;
+    public float distanciaParar = 2f;
+    public float distancia;
 
     //set y get
     public int MaxHealth
@@ -42,11 +45,13 @@ public class Personaje : MonoBehaviour
         get { return maxHealth; }
         set { maxHealth = value; }
     }
+    public bool isColliding = false;
 
     // Start is called before the first frame update
     void Start()
     {
-      
+        //Nada mas empezar el personaje corre
+        animator.SetBool("Correr", true);
 
         //incializar de la var health
         maxHealth = 100;
@@ -62,21 +67,98 @@ public class Personaje : MonoBehaviour
     {
 
 
-        //limitar el tiempo de ataque
-        if (Time.time >= nextAttackTime) {
-            if (Input.GetKeyDown(KeyCode.Space))
+        //Pruebas raycast 
+        enemigoLayer = LayerMask.GetMask("Enemigo");
+        RaycastHit2D hit;
+        hit = Physics2D.Raycast(transform.position +Vector3.right , Vector2.right ,20f,enemigoLayer);
+        Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.green, 20f);
+        if (hit){
+
+         Debug.Log("detectado: " + hit.collider.name);
+            if (hit.transform.tag == "Enemigo" | hit.transform.tag=="Torre")  //  hit.collider.gameObject.layer == enemigoLayer  se puede hacer esto en lugar de comprobar el tag
             {
-                 
-                Atacar();
-                nextAttackTime = Time.time + 1f / attackRate;
+                //si detectamos enemigo y todavia no estamos en distancia de ataque corremos
+                animator.SetBool("Correr", true);
+                //debug para ver el rayo
+                Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.red, 20f);
+               //funcion para calcular una distancia entre dos puntos, el punto dond esta colisionado el rayo menos el punto donde esta situado el personaje 
+                distancia = Vector2.Distance(hit.point, transform.position);
+              //  Debug.Log("distancia: " + distancia);
+                if(distancia < 2f)
+                {
+                    //cuando estamos en distancia de ataque paramos de correr
+                    animator.SetBool("Correr", false);
+                    Debug.Log("Distancia de ataque");
+                    if (Time.time >= nextAttackTime)
+                    {
+                     //   animator.SetTrigger("Atacar");
+                            Atacar();
+                            nextAttackTime = Time.time + 1f / attackRate;
+
+                        
+                    }
+                    
+                }
+                
+            }
+       //     else if(hit.transform.tag == "Torre"){}
+            else { }
+             //   Debug.DrawRay(transform.position + Vector3.right , Vector2.right , Color.green,20f);
+            
+            
+        }
+
+
+        /*
+                if (Input.GetKeyDown(KeyCode.C))
+                {
+                    animator.SetBool("Correr", true);
+                    animator.SetBool("Idle", false);
+                }
+                if (Input.GetKeyDown(KeyCode.S))
+                {
+                    animator.SetBool("Correr", false);
+                    animator.SetBool("Idle", true);
+                }
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    animator.SetTrigger("Atacar");
+                    animator.SetBool("Idle", true);
+                    animator.SetBool("Correr", false);
+                }
+                if (Input.GetKeyDown(KeyCode.D))
+                {
+                    animator.SetBool("Idle", true);
+                    animator.SetBool("Atacar", false);
+                }
+
+            */
+        //Mover el personaje la derecha
+        if (animator.GetBool("Correr")==true)
+        {
+            transform.Translate(new Vector3(0.1f, 0.0f));
+        }
+        /*
+        if (isColliding)
+        {
+            if (Time.time >= nextAttackTime)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    animator.SetBool("Atacar", true);
+                    Atacar();
+                    nextAttackTime = Time.time + 1f / attackRate;
+                   
+                }
             }
         }
-       
+        */
 
         //Mover el personaje la derecha
-        transform.Translate(new Vector3(0.1f, 0.0f));
-        animator.SetTrigger("Correr");
-   
+        //  transform.Translate(new Vector3(0.1f, 0.0f));
+        //animator.SetTrigger("Correr");
+
+
 
 
     }
@@ -87,6 +169,7 @@ public class Personaje : MonoBehaviour
     public void takeDamage(int damage) {
         currentHealth -= damage;
         animator.SetTrigger("Dano");
+        
 
         //cuando se da daño cambiamos el valor del health o slider
         healthBar.SetHealth(currentHealth);
@@ -98,8 +181,10 @@ public class Personaje : MonoBehaviour
 
 
     void Atacar() {
+        animator.SetBool("Correr", false);
+        animator.SetBool("Idle", true);
         //play attack animation
-        animator.SetTrigger("Atacar");
+        // animator.SetTrigger("Atacar");
         //detect enemies in range of attack
         //se crea un circulo en la posicion de ataque que va detecter los layers de los objetos que colisiona con este circulo
         //se crea una array de colider para guardar los objetos que se han colisionado
@@ -110,11 +195,27 @@ public class Personaje : MonoBehaviour
         foreach (Collider2D enemigo in hitEnemigos) {
             Debug.Log(" we Hit enemy:" + enemigo.name);
             //access to all enemy and damage them
-            enemigo.GetComponent<Enemigo>().takeDamage(30);
+            animator.SetTrigger("Atacar");
+            if (enemigo.attachedRigidbody.gameObject.tag == "Enemigo")
+            {
+                enemigo.GetComponent<Enemigo>().takeDamage(30);
+            }
+            if (enemigo.attachedRigidbody.gameObject.tag == "Torre")
+            {
+                enemigo.GetComponent<Torre>().takeDamage(30);
+            }
 
+           
 
+       /*   if(  enemigo.GetComponent<Enemigo>().healthBar.slider.value <= 0){
+                isColliding = false;
+                animator.SetBool("Correr", true);
+                animator.SetBool("Atacar", false);
+                animator.SetBool("Idle", false);
+
+            }*/
         }
-
+        
     }
 
     private void OnDrawGizmosSelected()
@@ -126,7 +227,13 @@ public class Personaje : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-      //  if (collision.gameObject.tag == "") { }
+       /*  if (collision.gameObject.tag == "Enemigo") {
+            animator.SetBool("Correr", false);
+            animator.SetBool("Idle", true);
+            isColliding = true;
+            
+
+        }*/
     }
 
 
@@ -141,6 +248,7 @@ public class Personaje : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = false;
         //2. disbale the script
         this.enabled = false;
+
     }
 
 }

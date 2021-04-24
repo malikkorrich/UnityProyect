@@ -79,7 +79,7 @@ public class Enemigo : MonoBehaviour
 
        
         //Mover el personaje la derecha
-        transform.Translate(new Vector3(-0.5f, 0.0f));
+    //    transform.Translate(new Vector3(-0.5f, 0.0f));
      
     }
 
