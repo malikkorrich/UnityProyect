@@ -38,7 +38,8 @@ public class Personaje : MonoBehaviour
 
     LayerMask enemigoLayer;
     public float distanciaParar = 2f;
-    public float distancia;
+    public float distanciaEnemigo;
+    public float distanciaAliado;
 
     //set y get
     public int MaxHealth
@@ -71,25 +72,26 @@ public class Personaje : MonoBehaviour
         //Pruebas raycast 
         enemigoLayer = LayerMask.GetMask("Enemigo");
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(transform.position +Vector3.right , Vector2.right ,20f,enemigoLayer);
+        hit = Physics2D.Raycast(transform.position +Vector3.right , Vector2.right ,20f);
      //   Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.green, 20f);
         if (hit){
-
-     //    Debug.Log("detectado: " + hit.collider.name);
+            
+            //    Debug.Log("detectado: " + hit.collider.name);
             if (hit.transform.tag == "Enemigo" | hit.transform.tag=="Torre")  //  hit.collider.gameObject.layer == enemigoLayer  se puede hacer esto en lugar de comprobar el tag
             {
+                Debug.Log("detectado enemigo: " + hit.collider.name);
                 //si detectamos enemigo y todavia no estamos en distancia de ataque corremos
                 animator.SetBool("Correr", true);
                 //debug para ver el rayo
-              //  Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.red, 20f);
-               //funcion para calcular una distancia entre dos puntos, el punto dond esta colisionado el rayo menos el punto donde esta situado el personaje 
-                distancia = Vector2.Distance(hit.point, transform.position);
-              //  Debug.Log("distancia: " + distancia);
-                if(distancia < 2f)
+                //  Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.red, 20f);
+                //funcion para calcular una distancia entre dos puntos, el punto dond esta colisionado el rayo menos el punto donde esta situado el personaje 
+                distanciaEnemigo = Vector2.Distance(hit.point, transform.position);
+                //  Debug.Log("distancia: " + distancia);
+                if (distanciaEnemigo < 2f)
                 {
                     //cuando estamos en distancia de ataque paramos de correr
                     animator.SetBool("Correr", false);
-                    Debug.Log("Distancia de ataque");
+           //         Debug.Log("Distancia de ataque");
                     if (Time.time >= nextAttackTime)
                     {
                      //   animator.SetTrigger("Atacar");
@@ -100,15 +102,28 @@ public class Personaje : MonoBehaviour
                     }
                     
                 }
-                
             }
-       //     else if(hit.transform.tag == "Torre"){}
-            else { }
-             //   Debug.DrawRay(transform.position + Vector3.right , Vector2.right , Color.green,20f);
-            
-            
+            else
+            {
+                Debug.Log("detectado aliado: " + hit.collider.name);
+
+                distanciaAliado = Vector2.Distance(hit.point, transform.position);
+                Debug.Log("distancia con aliado : " + distanciaAliado);
+                if (distanciaAliado < 3f)
+                {
+                    animator.SetBool("Correr", false);
+                    animator.SetBool("Idle", true);
+
+                }
+            }
+
+            //   Debug.DrawRay(transform.position + Vector3.right , Vector2.right , Color.green,20f);
+
+
         }
-        //Detecccion aliados
+
+ /*   
+ //Detecccion aliados
 
         personajeLayer = LayerMask.GetMask("Personaje");
         RaycastHit2D hit2;
@@ -126,17 +141,18 @@ public class Personaje : MonoBehaviour
             //funcion para calcular una distancia entre dos puntos, el punto dond esta colisionado el rayo menos el punto donde esta situado el personaje 
             distancia = Vector2.Distance(hit2.point, transform.position);
             Debug.Log("distancia: " + distancia);
-            if (distancia < 5f)
+            if (distancia < 3f)
             {
+          //      hit2.transform.gameObject.GetComponent<Personaje>().activarIdle();
                 //cuando estamos en distancia de ataque paramos de correr
-                animator.SetBool("Correr", false);
+            //    hit2.transform.gameObject.GetComponent<Personaje>().activarCorrer();
                 Debug.Log("Distancia de ataque Aliado");
-                animator.SetBool("Idle", true);
+              
 
             }
 
 
-        }
+        } */
 
 
         /*
@@ -168,28 +184,7 @@ public class Personaje : MonoBehaviour
         {
             transform.Translate(new Vector3(0.1f, 0.0f));
         }
-        /*
-        if (isColliding)
-        {
-            if (Time.time >= nextAttackTime)
-            {
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    animator.SetBool("Atacar", true);
-                    Atacar();
-                    nextAttackTime = Time.time + 1f / attackRate;
-                   
-                }
-            }
-        }
-        */
-
-        //Mover el personaje la derecha
-        //  transform.Translate(new Vector3(0.1f, 0.0f));
-        //animator.SetTrigger("Correr");
-
-
-
+     
 
     }
 
@@ -207,7 +202,29 @@ public class Personaje : MonoBehaviour
             Die();
         }
         
-           }
+    }
+    public void activarIdle()
+    {
+        if (animator.GetBool("Idle"))
+        {
+            animator.SetBool("Idle", false);
+        }
+        else
+        {
+            animator.SetBool("Idle", true);
+        }
+    }
+    public void activarCorrer()
+    {
+        if (animator.GetBool("Correr"))
+        {
+            animator.SetBool("Correr", false);
+        }
+        else
+        {
+            animator.SetBool("Correr", true);
+        }
+    }
 
 
     void Atacar() {

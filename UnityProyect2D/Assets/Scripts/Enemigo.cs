@@ -75,7 +75,7 @@ public class Enemigo : MonoBehaviour
         if (hit)
         {
 
-            Debug.Log("detectado: " + hit.collider.name);
+      //      Debug.Log("detectado: " + hit.collider.name);
             if (hit.transform.tag == "Personaje" | hit.transform.tag == "Torre")  //  hit.collider.gameObject.layer == enemigoLayer  se puede hacer esto en lugar de comprobar el tag
             {
                 //si detectamos enemigo y todavia no estamos en distancia de ataque corremos
@@ -89,7 +89,7 @@ public class Enemigo : MonoBehaviour
                 {
                     //cuando estamos en distancia de ataque paramos de correr
                     animator.SetBool("Correr", false);
-                    Debug.Log("Distancia de ataque");
+              //      Debug.Log("Distancia de ataque");
                     if (Time.time >= nextAttackTime)
                     {
                         //   animator.SetTrigger("Atacar");
