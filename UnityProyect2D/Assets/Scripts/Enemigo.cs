@@ -103,15 +103,6 @@ public class Enemigo : MonoBehaviour
                 }
 
             }
-            if (animator.GetBool("Correr") == true)
-            {
-                transform.Translate(new Vector3(-0.1f, 0.0f));
-            }
-
-
-            //Mover el personaje la derecha
-            //    transform.Translate(new Vector3(-0.5f, 0.0f));
-
         }
 
         //Detecccion aliados
@@ -130,24 +121,29 @@ public class Enemigo : MonoBehaviour
                 Debug.Log("detectado aliado: " + hit2.collider.name);
 
                 distanciaAliado = Vector2.Distance(hit2.point, transform.position);
-                Debug.Log("distancia con aliado : " + distanciaAliado);
+                Debug.Log("script enemigo - distancia con aliado : " + distanciaAliado);
                 if (distanciaAliado < 3f)
                 {
+                    Debug.Log("script enemigo - distancia de parar");
                     animator.SetBool("Correr", false);
                     animator.SetBool("Idle", true);
 
                 }
                 else
                 {
+                    Debug.Log("script enemigo - correr ");
                     animator.SetBool("Correr", true);
                     animator.SetBool("Idle", false);
                 }
             }
+        }
 
-
-
+        if (animator.GetBool("Correr") == true)
+        {
+            transform.Translate(new Vector3(-0.1f, 0.0f));
         }
     }
+
 
 
     //metodo para hacer daño

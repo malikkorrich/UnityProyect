@@ -8,6 +8,8 @@ TagManager:
   - Torre
   - Personaje
   - Enemigo
+  - SpawnPersonaje2
+  - Spawn Mago
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - 
   - Enemigo
   - Personaje
-  - 
+  - Spawn
   - 
   - 
   - 

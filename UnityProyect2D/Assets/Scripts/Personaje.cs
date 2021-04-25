@@ -79,7 +79,7 @@ public class Personaje : MonoBehaviour
             //    Debug.Log("detectado: " + hit.collider.name);
             if (hit.transform.tag == "Enemigo" | hit.transform.tag=="Torre")  //  hit.collider.gameObject.layer == enemigoLayer  se puede hacer esto en lugar de comprobar el tag
             {
-                Debug.Log("detectado enemigo: " + hit.collider.name);
+    //            Debug.Log("detectado enemigo: " + hit.collider.name);
                 //si detectamos enemigo y todavia no estamos en distancia de ataque corremos
                 animator.SetBool("Correr", true);
                 //debug para ver el rayo
@@ -127,10 +127,10 @@ public class Personaje : MonoBehaviour
         {
             if (hit2.transform.tag == "Personaje")
             {
-                Debug.Log("detectado aliado: " + hit2.collider.name);
+       //         Debug.Log("detectado aliado: " + hit2.collider.name);
 
                 distanciaAliado = Vector2.Distance(hit2.point, transform.position);
-                Debug.Log("distancia con aliado : " + distanciaAliado);
+         //       Debug.Log("distancia con aliado : " + distanciaAliado);
                 if (distanciaAliado < 3f)
                 {
                     animator.SetBool("Correr", false);
