@@ -188,11 +188,11 @@ public class Enemigo : MonoBehaviour
             animator.SetTrigger("Atacar");
             if (enemigo.attachedRigidbody.gameObject.tag == "Personaje")
             {
-                enemigo.GetComponent<Personaje>().takeDamage(30);
+                enemigo.GetComponent<Personaje>().takeDamage(5);
             }
             if (enemigo.attachedRigidbody.gameObject.tag == "Torre")
             {
-                enemigo.GetComponent<Torre>().takeDamage(30);
+                enemigo.GetComponent<Torre>().takeDamage(5);
             }
 
 

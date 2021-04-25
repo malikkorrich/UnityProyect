@@ -239,11 +239,11 @@ public class Personaje : MonoBehaviour
             animator.SetTrigger("Atacar");
             if (enemigo.attachedRigidbody.gameObject.tag == "Enemigo")
             {
-                enemigo.GetComponent<Enemigo>().takeDamage(30);
+                enemigo.GetComponent<Enemigo>().takeDamage(10);
             }
             if (enemigo.attachedRigidbody.gameObject.tag == "Torre")
             {
-                enemigo.GetComponent<Torre>().takeDamage(30);
+                enemigo.GetComponent<Torre>().takeDamage(20);
             }
 
            
