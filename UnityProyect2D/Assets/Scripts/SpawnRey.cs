@@ -30,8 +30,12 @@ public class SpawnRey: MonoBehaviour
                 Debug.Log("Clicked" + hit.collider.name);
                 if (hit.transform.name == "Spawn Rey")
                 {
-                    Debug.Log("Clicked" + hit.collider.name);
-                    Instantiate(personaje, new Vector3(-17f, -11f,-60f), Quaternion.identity);
+                    if (DiamondCounter.valorDiamantes >= 50)
+                    {
+
+                        Instantiate(personaje, new Vector3(-17f, -11f, -60f), Quaternion.identity);
+                        DiamondCounter.valorDiamantes -= 50;
+                    }
                 }
             }
         }

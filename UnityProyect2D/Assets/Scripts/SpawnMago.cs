@@ -20,22 +20,7 @@ public class SpawnMago : MonoBehaviour
     void Update()
     {
         //Detecta cuando se hace click sobre el cubo
-        /*      if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject())
-              {
-                  Debug.Log("Clicked");
-                  Instantiate(personaje, new Vector2(-20f, -6f), Quaternion.identity);
-              }
-              if (Input.GetMouseButtonDown(0))
-              {
-                  Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                  RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-                  if (hit.collider != null)
-                  {
-                      Debug.Log("Clicked" + hit.collider.name);
-                      Instantiate(personaje, new Vector2(-20f, -6f), Quaternion.identity);
-                  }
-              }*/
         spawnLayer = LayerMask.GetMask("Spawn");
         if (Input.GetMouseButtonDown(0))
         {

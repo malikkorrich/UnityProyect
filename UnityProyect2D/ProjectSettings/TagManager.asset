@@ -10,6 +10,8 @@ TagManager:
   - Enemigo
   - SpawnPersonaje2
   - Spawn Mago
+  - SpawnDemon
+  - Spawn Enemigos
   layers:
   - Default
   - TransparentFX

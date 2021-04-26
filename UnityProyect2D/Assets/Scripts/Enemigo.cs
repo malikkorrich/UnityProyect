@@ -71,7 +71,7 @@ public class Enemigo : MonoBehaviour
         //Pruebas raycast 
         aliadoLayer = LayerMask.GetMask("Personaje");
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 20f, aliadoLayer);
+        hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, aliadoLayer);
         Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.green, 20f);
         if (hit)
         {
@@ -118,20 +118,20 @@ public class Enemigo : MonoBehaviour
         {
             if (hit2.transform.tag == "Enemigo")
             {
-                Debug.Log("detectado aliado: " + hit2.collider.name);
+   //             Debug.Log("detectado aliado: " + hit2.collider.name);
 
                 distanciaAliado = Vector2.Distance(hit2.point, transform.position);
-                Debug.Log("script enemigo - distancia con aliado : " + distanciaAliado);
+      //          Debug.Log("script enemigo - distancia con aliado : " + distanciaAliado);
                 if (distanciaAliado < 3f)
                 {
-                    Debug.Log("script enemigo - distancia de parar");
+              //      Debug.Log("script enemigo - distancia de parar");
                     animator.SetBool("Correr", false);
                     animator.SetBool("Idle", true);
 
                 }
                 else
                 {
-                    Debug.Log("script enemigo - correr ");
+                  //  Debug.Log("script enemigo - correr ");
                     animator.SetBool("Correr", true);
                     animator.SetBool("Idle", false);
                 }
@@ -173,6 +173,7 @@ public class Enemigo : MonoBehaviour
         //detect enemies in range of attack
         //se crea un circulo en la posicion de ataque que va detecter los layers de los objetos que colisiona con este circulo
         //se crea una array de colider para guardar los objetos que se han colisionado
+        aliadoLayer = LayerMask.GetMask("Personaje");
         Collider2D[] hitAliados = Physics2D.OverlapCircleAll(posicionAtaque.position, rangoAtaque, aliadoLayer);
 
 
@@ -184,7 +185,22 @@ public class Enemigo : MonoBehaviour
             animator.SetTrigger("Atacar");
             if (enemigo.attachedRigidbody.gameObject.tag == "Personaje")
             {
-                enemigo.GetComponent<Personaje>().takeDamage(5);
+                Debug.Log("detectado personaje");
+
+                if(enemigo.attachedRigidbody.gameObject.transform.name == "Rey(Clone)")
+                {
+                    enemigo.GetComponent<Rey>().takeDamage(5);
+                }
+                if (enemigo.attachedRigidbody.gameObject.transform.name == "Mago(Clone)")
+                {
+                    Debug.Log("daño a mago");
+                    enemigo.GetComponent<Mago>().takeDamage(5);
+                }
+                if (enemigo.attachedRigidbody.gameObject.transform.name == "Demon(Clone)")
+                {
+                    enemigo.GetComponent<Demon>().takeDamage(5);
+                }
+
             }
             if (enemigo.attachedRigidbody.gameObject.tag == "Torre")
             {
@@ -219,13 +235,6 @@ public class Enemigo : MonoBehaviour
        
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-      /*  if (collision.gameObject.tag == "Personaje")
-        {
-            keepMoving = false; 
-        }*/
-    }
 
 
 
