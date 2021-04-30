@@ -3,7 +3,11 @@ guid: 64ca220b3e6623745a9219ad344ce6d8
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - healthBar: {instanceID: 0}
+  - Rey: {fileID: 8773571861636584291, guid: f8b49910fe1baaf42b4587ad44cec0b4, type: 3}
+  - animator: {instanceID: 0}
+  - posicionAtaque: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

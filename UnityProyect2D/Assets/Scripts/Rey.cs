@@ -120,7 +120,7 @@ public class Rey : MonoBehaviour
         RaycastHit2D hit2;
         hit2 = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, 20f, personajeLayer);
 
-        Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.red, 20f);
+       // Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.red, 20f);
 
 
         if (hit2)
@@ -176,7 +176,7 @@ public class Rey : MonoBehaviour
         //Mover el personaje la derecha
         if (animator.GetBool("Correr") == true)
         {
-            transform.Translate(new Vector3(1.3f, 0.0f));
+            transform.Translate(new Vector3(0.1f, 0.0f));
         }
 
 
@@ -232,6 +232,7 @@ public class Rey : MonoBehaviour
         //detect enemies in range of attack
         //se crea un circulo en la posicion de ataque que va detecter los layers de los objetos que colisiona con este circulo
         //se crea una array de colider para guardar los objetos que se han colisionado
+
         Collider2D[] hitEnemigos = Physics2D.OverlapCircleAll(posicionAtaque.position, rangoAtaque, enemigoLayers);
 
 

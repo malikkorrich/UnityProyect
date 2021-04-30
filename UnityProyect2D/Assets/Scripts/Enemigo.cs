@@ -14,6 +14,7 @@ public class Enemigo : MonoBehaviour
 
     //objeto de tipo Healthbar
     public HealthBar healthBar;
+    public GameObject Rey;
 
 
 
@@ -72,7 +73,7 @@ public class Enemigo : MonoBehaviour
         aliadoLayer = LayerMask.GetMask("Personaje");
         RaycastHit2D hit;
         hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, aliadoLayer);
-        Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.green, 20f);
+    //    Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.green, 20f);
         if (hit)
         {
 
@@ -82,7 +83,7 @@ public class Enemigo : MonoBehaviour
                 //si detectamos enemigo y todavia no estamos en distancia de ataque corremos
                 animator.SetBool("Correr", true);
                 //debug para ver el rayo
-                Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.red, 20f);
+              //  Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.red, 20f);
                 //funcion para calcular una distancia entre dos puntos, el punto dond esta colisionado el rayo menos el punto donde esta situado el personaje 
                 distanciaEnemigo = Vector2.Distance(hit.point, transform.position);
                 //  Debug.Log("distancia: " + distancia);
@@ -111,7 +112,7 @@ public class Enemigo : MonoBehaviour
         RaycastHit2D hit2;
         hit2 = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 20f, aliadoLayer);
 
-        Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.red, 20f);
+     //   Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.red, 20f);
 
 
         if (hit2)
@@ -180,20 +181,22 @@ public class Enemigo : MonoBehaviour
         //damage them
         foreach (Collider2D enemigo in hitAliados)
         {
-            Debug.Log(" we Hit enemy:" + enemigo.name);
+        //    Debug.Log(" we Hit enemy:" + enemigo.name);
             //access to all enemy and damage them
             animator.SetTrigger("Atacar");
             if (enemigo.attachedRigidbody.gameObject.tag == "Personaje")
             {
-                Debug.Log("detectado personaje");
+      //          Debug.Log("detectado personaje");
 
                 if(enemigo.attachedRigidbody.gameObject.transform.name == "Rey(Clone)")
                 {
+                //    Debug.Log("daño a rey");
+                 //   Rey.GetComponent<Rey>().takeDamage(5);
                     enemigo.GetComponent<Rey>().takeDamage(5);
                 }
                 if (enemigo.attachedRigidbody.gameObject.transform.name == "Mago(Clone)")
                 {
-                    Debug.Log("daño a mago");
+                  //  Debug.Log("daño a mago");
                     enemigo.GetComponent<Mago>().takeDamage(5);
                 }
                 if (enemigo.attachedRigidbody.gameObject.transform.name == "Demon(Clone)")

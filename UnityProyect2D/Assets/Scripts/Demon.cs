@@ -31,7 +31,7 @@ public class Demon : MonoBehaviour
 
     //var para limitar el tiempo del ataque
     //Cuantas veces va atacar en el segundo
-    public float attackRate = 1;
+    public float attackRate = 0.5f;
     //va guaradar el tiempo para atacar proxima vez
     float nextAttackTime = 0f;
 
@@ -120,7 +120,7 @@ public class Demon : MonoBehaviour
         RaycastHit2D hit2;
         hit2 = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, 20f, personajeLayer);
 
-        Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.red, 20f);
+      //  Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.red, 20f);
 
 
         if (hit2)
@@ -176,7 +176,7 @@ public class Demon : MonoBehaviour
         //Mover el personaje la derecha
         if (animator.GetBool("Correr") == true)
         {
-            transform.Translate(new Vector3(0.80f, 0.0f));
+            transform.Translate(new Vector3(0.1f, 0.0f));
         }
 
 

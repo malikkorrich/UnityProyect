@@ -120,7 +120,7 @@ public class Mago : MonoBehaviour
         RaycastHit2D hit2;
         hit2 = Physics2D.Raycast(transform.position + Vector3.right , Vector2.right, 20f, personajeLayer);
 
-        Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.red, 20f);
+      //  Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.red, 20f);
 
 
         if (hit2)
