@@ -13,7 +13,7 @@ public class Demon : MonoBehaviour
     //objeto de tipo Healthbar
     public HealthBar healthBar;
 
-
+    public GameObject demond_prefab;
 
     //var Animacion objeto responsable de la animacion 
     public Animator animator;
@@ -300,7 +300,7 @@ public class Demon : MonoBehaviour
         if (DiamondCounter.valorDiamantes >= 70)
         {
            
-            GameObject.Instantiate(gameObject, transform.position, transform.rotation);
+            GameObject.Instantiate(demond_prefab, new Vector3(-26.74f, -12.23f, -60.69f), transform.rotation);
             DiamondCounter.valorDiamantes -= 70;
             gameObject.SetActive(true);
         }

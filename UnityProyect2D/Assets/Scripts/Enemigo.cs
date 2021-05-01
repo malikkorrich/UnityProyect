@@ -16,7 +16,7 @@ public class Enemigo : MonoBehaviour
     public HealthBar healthBar;
     public GameObject Rey;
 
-
+    public GameObject enimgo_prefab;
 
     //var Animacion objeto responsable de la animacion 
     public Animator animator;
@@ -141,7 +141,7 @@ public class Enemigo : MonoBehaviour
 
         if (animator.GetBool("Correr") == true)
         {
-            transform.Translate(new Vector3(-0.1f, 0.0f));
+            transform.Translate(new Vector3(-0.07f, 0.0f));
         }
     }
 
@@ -188,18 +188,18 @@ public class Enemigo : MonoBehaviour
             {
       //          Debug.Log("detectado personaje");
 
-                if(enemigo.attachedRigidbody.gameObject.transform.name == "Rey(Clone)")
+                if(enemigo.attachedRigidbody.gameObject.transform.name == "Rey(Clone)" || enemigo.attachedRigidbody.gameObject.transform.name == "Rey")
                 {
                 //    Debug.Log("daño a rey");
                  //   Rey.GetComponent<Rey>().takeDamage(5);
                     enemigo.GetComponent<Rey>().takeDamage(5);
                 }
-                if (enemigo.attachedRigidbody.gameObject.transform.name == "Mago(Clone)")
+                if (enemigo.attachedRigidbody.gameObject.transform.name == "Mago(Clone)" || enemigo.attachedRigidbody.gameObject.transform.name == "Mago")
                 {
                   //  Debug.Log("daño a mago");
-                    enemigo.GetComponent<Mago>().takeDamage(5);
+                    enemigo.GetComponent<Mago>().takeDamage(70);
                 }
-                if (enemigo.attachedRigidbody.gameObject.transform.name == "Demon(Clone)")
+                if (enemigo.attachedRigidbody.gameObject.transform.name == "Demon(Clone)" || enemigo.attachedRigidbody.gameObject.transform.name == "Demon")
                 {
                     enemigo.GetComponent<Demon>().takeDamage(5);
                 }
@@ -246,7 +246,7 @@ public class Enemigo : MonoBehaviour
         if (DiamondCounter.valorDiamantes >= 50)
         {
             
-            GameObject.Instantiate(gameObject, transform.position, transform.rotation);
+            GameObject.Instantiate(enimgo_prefab, new Vector3(-26.74f, -12.23f, -60.69f), transform.rotation);
             DiamondCounter.valorDiamantes -= 50;
             gameObject.SetActive(true);
         }

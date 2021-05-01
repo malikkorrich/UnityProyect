@@ -461,7 +461,7 @@ GameObject:
   - component: {fileID: 5399462651092418113}
   - component: {fileID: 5399462651092418126}
   m_Layer: 9
-  m_Name: Personaje
+  m_Name: Mago
   m_TagString: Personaje
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -591,6 +591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 5399462650345239020}
+  mago_prefab: {fileID: 5399462651092418116}
   animator: {fileID: 5399462651092418126}
   posicionAtaque: {fileID: 5399462650126743127}
   rangoAtaque: 0.96
