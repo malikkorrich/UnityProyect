@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: df8d9c71d5fbb4641b2bcca99f3626bb
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Fixation Grunged
+  fontNames:
+  - Fixation Grunged
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 5f16d16bba6b6404b909484da3272bd4, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -287,4 +287,17 @@ public class Mago : MonoBehaviour
 
     }
 
+
+    public void lunchMago()
+    {
+        if (DiamondCounter.valorDiamantes >= 30)
+        {
+           
+            GameObject.Instantiate(gameObject, transform.position, transform.rotation);
+            DiamondCounter.valorDiamantes -=30 ;
+            gameObject.SetActive(true);
+        }
+
+    }
+
 }

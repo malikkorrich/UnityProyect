@@ -61,6 +61,8 @@ public class Demon : MonoBehaviour
 
         //iniciar el slider o health del player 
         healthBar.SetMaxHealth(maxHealth);
+
+        
     }
 
     // Update is called once per frame
@@ -289,6 +291,19 @@ public class Demon : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = false;
         //2. disbale the script
         this.enabled = false;
+
+    }
+
+
+    public void lunchDemond()
+    {
+        if (DiamondCounter.valorDiamantes >= 70)
+        {
+           
+            GameObject.Instantiate(gameObject, transform.position, transform.rotation);
+            DiamondCounter.valorDiamantes -= 70;
+            gameObject.SetActive(true);
+        }
 
     }
 }

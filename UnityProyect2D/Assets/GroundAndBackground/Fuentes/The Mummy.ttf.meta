@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: f20912316adfd7c4689c585bf793acdc
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: The Mummy
+  fontNames:
+  - The Mummy
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 2757be585b6a34a45a3d34e90bad1717, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -7,13 +7,18 @@ public class DiamondCounter : MonoBehaviour
 {
 
     public static int valorDiamantes = 0;
+    //getter
+    public int ValorDiamantes {
+        get { return valorDiamantes; }
+        set { valorDiamantes = value; }
+    }
     Text Valor;
     public float timer;
     public int delay = 1;
     // Start is called before the first frame update
     void Start()
     {
-        Valor = GetComponent<Text>();
+       
     }
 
     // Update is called once per frame
@@ -25,6 +30,8 @@ public class DiamondCounter : MonoBehaviour
             timer = 0f;
             valorDiamantes += 10;
         }
-        Valor.text = valorDiamantes.ToString();
+         
     }
+
+   
 }

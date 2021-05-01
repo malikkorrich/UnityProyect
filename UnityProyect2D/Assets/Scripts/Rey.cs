@@ -292,4 +292,16 @@ public class Rey : MonoBehaviour
         this.enabled = false;
 
     }
+
+    public void lunchRey()
+    {
+        if (DiamondCounter.valorDiamantes >= 50)
+        {
+          
+            GameObject.Instantiate(gameObject, transform.position, transform.rotation);
+            DiamondCounter.valorDiamantes -=50;
+            gameObject.SetActive(true);
+        }
+
+    }
 }

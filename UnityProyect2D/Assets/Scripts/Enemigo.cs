@@ -241,7 +241,17 @@ public class Enemigo : MonoBehaviour
 
 
 
+    public void lunchEvil()
+    {
+        if (DiamondCounter.valorDiamantes >= 50)
+        {
+            
+            GameObject.Instantiate(gameObject, transform.position, transform.rotation);
+            DiamondCounter.valorDiamantes -= 50;
+            gameObject.SetActive(true);
+        }
 
+    }
 
 
     private void OnDrawGizmosSelected()
