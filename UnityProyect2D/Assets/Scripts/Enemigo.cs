@@ -192,7 +192,7 @@ public class Enemigo : MonoBehaviour
                 {
                 //    Debug.Log("daño a rey");
                  //   Rey.GetComponent<Rey>().takeDamage(5);
-                    enemigo.GetComponent<Rey>().takeDamage(5);
+                    enemigo.GetComponent<Rey>().takeDamage(50);
                 }
                 if (enemigo.attachedRigidbody.gameObject.transform.name == "Mago(Clone)" || enemigo.attachedRigidbody.gameObject.transform.name == "Mago")
                 {
@@ -205,6 +205,9 @@ public class Enemigo : MonoBehaviour
                 }
 
             }
+
+         
+
             if (enemigo.attachedRigidbody.gameObject.tag == "Torre")
             {
                 enemigo.GetComponent<Torre>().takeDamage(5);

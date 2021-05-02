@@ -9,7 +9,10 @@ public class GameManager : MonoBehaviour
     // creamos 2 var de tipo text que sea de la interface del juego
     public Text diamantes_txt;
     private DiamondCounter diamond;
- 
+    public GameObject gameover_pn;
+    public GameObject victory_pn;
+    public Torre torre1;
+    public Torre torre2;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,5 +24,28 @@ public class GameManager : MonoBehaviour
     {
        
         diamantes_txt.text = diamond.ValorDiamantes.ToString();
+
+
+        //activar pantalla gameover
+        if (torre1.CurrentHealth <= 0 && gameover_pn.activeSelf == false)
+        {
+            gameover_pn.SetActive(true);
+
+        }
+        else if (torre2.CurrentHealth <= 0 && gameover_pn.activeSelf == false) {
+
+            victory_pn.SetActive(true);
+        }
+
+
+    }
+
+
+
+    //recargar el juego
+    public void Restart() {
+        diamond.ValorDiamantes = 0;
+        SceneManager.LoadScene("SampleScene");
+        
     }
 }

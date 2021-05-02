@@ -16,10 +16,10 @@ public class Torre : MonoBehaviour
 
 
     //set y get
-    public int MaxHealth
+    public int CurrentHealth
     {
-        get { return maxHealth; }
-        set { maxHealth = value; }
+        get { return currentHealth; }
+        set { currentHealth = value; }
     }
 
     // Start is called before the first frame update
