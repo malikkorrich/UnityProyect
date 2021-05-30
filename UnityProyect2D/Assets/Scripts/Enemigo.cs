@@ -14,8 +14,7 @@ public class Enemigo : MonoBehaviour
 
     //objeto de tipo Healthbar
     public HealthBar healthBar;
-    public GameObject Rey;
-
+    public LayerMask personajeLayer;
     public GameObject enimgo_prefab;
 
     //var Animacion objeto responsable de la animacion 
@@ -30,7 +29,7 @@ public class Enemigo : MonoBehaviour
 
     //layer to detect enemigos
     public LayerMask enemigoLayers;
-
+    LayerMask enemigoLayer;
 
     //var para limitar el tiempo del ataque
     //Cuantas veces va atacar en el segundo
@@ -69,21 +68,23 @@ public class Enemigo : MonoBehaviour
     void Update()
     {
 
+
         //Pruebas raycast 
-        aliadoLayer = LayerMask.GetMask("Personaje");
+        enemigoLayer = LayerMask.GetMask("Enemigo");
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, aliadoLayer);
-    //    Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.green, 20f);
+        hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right,100f, enemigoLayer);
+        //   Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.green, 20f);
         if (hit)
         {
 
-      //      Debug.Log("detectado: " + hit.collider.name);
-            if (hit.transform.tag == "Personaje" | hit.transform.tag == "Torre")  //  hit.collider.gameObject.layer == enemigoLayer  se puede hacer esto en lugar de comprobar el tag
+            //    Debug.Log("detectado: " + hit.collider.name);
+            if (hit.transform.tag == "Enemigo" | hit.transform.tag == "TorreEnemiga")  //  hit.collider.gameObject.layer == enemigoLayer  se puede hacer esto en lugar de comprobar el tag
             {
+                //            Debug.Log("detectado enemigo: " + hit.collider.name);
                 //si detectamos enemigo y todavia no estamos en distancia de ataque corremos
                 animator.SetBool("Correr", true);
                 //debug para ver el rayo
-              //  Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.red, 20f);
+                //  Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.red, 20f);
                 //funcion para calcular una distancia entre dos puntos, el punto dond esta colisionado el rayo menos el punto donde esta situado el personaje 
                 distanciaEnemigo = Vector2.Distance(hit.point, transform.position);
                 //  Debug.Log("distancia: " + distancia);
@@ -91,7 +92,7 @@ public class Enemigo : MonoBehaviour
                 {
                     //cuando estamos en distancia de ataque paramos de correr
                     animator.SetBool("Correr", false);
-              //      Debug.Log("Distancia de ataque");
+                    //         Debug.Log("Distancia de ataque");
                     if (Time.time >= nextAttackTime)
                     {
                         //   animator.SetTrigger("Atacar");
@@ -102,47 +103,60 @@ public class Enemigo : MonoBehaviour
                     }
 
                 }
+            }
+            else
+            {
 
             }
+
+            //   Debug.DrawRay(transform.position + Vector3.right , Vector2.right , Color.green,20f);
+
+
         }
+
 
         //Detecccion aliados
 
-        aliadoLayer = LayerMask.GetMask("Enemigo");
+        personajeLayer = LayerMask.GetMask("Personaje");
         RaycastHit2D hit2;
-        hit2 = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, 20f, aliadoLayer);
+        hit2 = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, 20f, personajeLayer);
 
-     //   Debug.DrawRay(transform.position + Vector3.left, Vector2.left, Color.red, 20f);
+        // Debug.DrawRay(transform.position + Vector3.right, Vector2.right, Color.red, 20f);
 
 
         if (hit2)
         {
-            if (hit2.transform.tag == "Enemigo")
+            if (hit2.transform.tag == "Personaje")
             {
-   //             Debug.Log("detectado aliado: " + hit2.collider.name);
+                //         Debug.Log("detectado aliado: " + hit2.collider.name);
 
                 distanciaAliado = Vector2.Distance(hit2.point, transform.position);
-      //          Debug.Log("script enemigo - distancia con aliado : " + distanciaAliado);
+                //       Debug.Log("distancia con aliado : " + distanciaAliado);
                 if (distanciaAliado < 3f)
                 {
-              //      Debug.Log("script enemigo - distancia de parar");
                     animator.SetBool("Correr", false);
                     animator.SetBool("Idle", true);
 
                 }
                 else
                 {
-                  //  Debug.Log("script enemigo - correr ");
                     animator.SetBool("Correr", true);
                     animator.SetBool("Idle", false);
                 }
             }
+
+
+
         }
 
+
+        //Mover el personaje la derecha
         if (animator.GetBool("Correr") == true)
         {
-            transform.Translate(new Vector3(-0.07f, 0.0f));
+            transform.Translate(new Vector3(0.2f, 0.0f));
         }
+
+
     }
 
 
@@ -164,7 +178,6 @@ public class Enemigo : MonoBehaviour
 
 
 
-
     void Atacar()
     {
         animator.SetBool("Correr", false);
@@ -174,54 +187,42 @@ public class Enemigo : MonoBehaviour
         //detect enemies in range of attack
         //se crea un circulo en la posicion de ataque que va detecter los layers de los objetos que colisiona con este circulo
         //se crea una array de colider para guardar los objetos que se han colisionado
-        aliadoLayer = LayerMask.GetMask("Personaje");
-        Collider2D[] hitAliados = Physics2D.OverlapCircleAll(posicionAtaque.position, rangoAtaque, aliadoLayer);
+
+        Collider2D[] hitEnemigos = Physics2D.OverlapCircleAll(posicionAtaque.position, rangoAtaque, enemigoLayers);
 
 
         //damage them
-        foreach (Collider2D enemigo in hitAliados)
+        foreach (Collider2D enemigo in hitEnemigos)
         {
-        //    Debug.Log(" we Hit enemy:" + enemigo.name);
+            Debug.Log(" we Hit enemy:" + enemigo.name);
             //access to all enemy and damage them
             animator.SetTrigger("Atacar");
-            if (enemigo.attachedRigidbody.gameObject.tag == "Personaje")
-            {
-      //          Debug.Log("detectado personaje");
 
-                if(enemigo.attachedRigidbody.gameObject.transform.name == "Rey(Clone)" || enemigo.attachedRigidbody.gameObject.transform.name == "Rey")
-                {
+            if (enemigo.attachedRigidbody.gameObject.transform.name == "ReyEnem(Clone)" | enemigo.attachedRigidbody.gameObject.transform.name == "ReyEnem")
+            {
                 //    Debug.Log("daño a rey");
-                 //   Rey.GetComponent<Rey>().takeDamage(5);
-                    enemigo.GetComponent<Rey>().takeDamage(50);
-                }
-                if (enemigo.attachedRigidbody.gameObject.transform.name == "Mago(Clone)" || enemigo.attachedRigidbody.gameObject.transform.name == "Mago")
-                {
-                  //  Debug.Log("daño a mago");
-                    enemigo.GetComponent<Mago>().takeDamage(70);
-                }
-                if (enemigo.attachedRigidbody.gameObject.transform.name == "Demon(Clone)" || enemigo.attachedRigidbody.gameObject.transform.name == "Demon")
-                {
-                    enemigo.GetComponent<Demon>().takeDamage(5);
-                }
-
+                //   Rey.GetComponent<Rey>().takeDamage(5);
+                enemigo.GetComponent<ReyEnem>().takeDamage(5);
             }
-
-         
-
-            if (enemigo.attachedRigidbody.gameObject.tag == "Torre")
+            if (enemigo.attachedRigidbody.gameObject.transform.name == "MagoEnem(Clone)" | enemigo.attachedRigidbody.gameObject.transform.name == "MagoEnem")
             {
-                enemigo.GetComponent<Torre>().takeDamage(5);
+                //  Debug.Log("daño a mago");
+                enemigo.GetComponent<MagoEnem>().takeDamage(7);
+            }
+            if (enemigo.attachedRigidbody.gameObject.transform.name == "DemonEnem(Clone)" | enemigo.attachedRigidbody.gameObject.transform.name == "DemonEnem")
+            {
+                enemigo.GetComponent<DemonEnem>().takeDamage(5);
+            }
+            if (enemigo.attachedRigidbody.gameObject.transform.name == "EvilEnem(Clone)" | enemigo.attachedRigidbody.gameObject.transform.name == "EvilEnem")
+            {
+                enemigo.GetComponent<EvilEnem>().takeDamage(5);
+            }
+            if (enemigo.attachedRigidbody.gameObject.tag == "TorreEnemiga")
+            {
+                enemigo.GetComponent<Torre>().takeDamage(30);
             }
 
 
-
-            /*   if(  enemigo.GetComponent<Enemigo>().healthBar.slider.value <= 0){
-                     isColliding = false;
-                     animator.SetBool("Correr", true);
-                     animator.SetBool("Atacar", false);
-                     animator.SetBool("Idle", false);
-
-                 }*/
         }
 
     }
@@ -249,7 +250,7 @@ public class Enemigo : MonoBehaviour
         if (DiamondCounter.valorDiamantes >= 50)
         {
             
-            GameObject.Instantiate(enimgo_prefab, new Vector3(-26.74f, -12.23f, -60.69f), transform.rotation);
+            GameObject.Instantiate(enimgo_prefab, new Vector3(-52.4f, -20.75f, -59.322f), transform.rotation);
             DiamondCounter.valorDiamantes -= 50;
             gameObject.SetActive(true);
         }

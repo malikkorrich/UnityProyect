@@ -12,6 +12,8 @@ TagManager:
   - Spawn Mago
   - SpawnDemon
   - Spawn Enemigos
+  - TorreAliada
+  - TorreEnemiga
   layers:
   - Default
   - TransparentFX

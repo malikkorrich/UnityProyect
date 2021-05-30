@@ -13,6 +13,7 @@ public class Torre : MonoBehaviour
     //objeto de tipo Healthbar
     public HealthBar healthBar;
 
+   public  Transform reyPrefab;
 
 
     //set y get
@@ -32,6 +33,10 @@ public class Torre : MonoBehaviour
 
         //iniciar el slider o health del player 
         healthBar.SetMaxHealth(maxHealth);
+
+        //   Physics2D.IgnoreCollision(reyPrefab.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+ //        Physics2D.IgnoreLayerCollision(9,9);
+
     }
 
     // Update is called once per frame

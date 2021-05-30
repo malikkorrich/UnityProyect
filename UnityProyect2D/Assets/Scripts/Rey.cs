@@ -77,7 +77,7 @@ public class Rey : MonoBehaviour
         {
 
             //    Debug.Log("detectado: " + hit.collider.name);
-            if (hit.transform.tag == "Enemigo" | hit.transform.tag == "Torre")  //  hit.collider.gameObject.layer == enemigoLayer  se puede hacer esto en lugar de comprobar el tag
+            if (hit.transform.tag == "Enemigo" | hit.transform.tag == "TorreEnemiga")  //  hit.collider.gameObject.layer == enemigoLayer  se puede hacer esto en lugar de comprobar el tag
             {
                 //            Debug.Log("detectado enemigo: " + hit.collider.name);
                 //si detectamos enemigo y todavia no estamos en distancia de ataque corremos
@@ -149,34 +149,10 @@ public class Rey : MonoBehaviour
         }
 
 
-        /*
-                if (Input.GetKeyDown(KeyCode.C))
-                {
-                    animator.SetBool("Correr", true);
-                    animator.SetBool("Idle", false);
-                }
-                if (Input.GetKeyDown(KeyCode.S))
-                {
-                    animator.SetBool("Correr", false);
-                    animator.SetBool("Idle", true);
-                }
-                if (Input.GetKeyDown(KeyCode.A))
-                {
-                    animator.SetTrigger("Atacar");
-                    animator.SetBool("Idle", true);
-                    animator.SetBool("Correr", false);
-                }
-                if (Input.GetKeyDown(KeyCode.D))
-                {
-                    animator.SetBool("Idle", true);
-                    animator.SetBool("Atacar", false);
-                }
-
-            */
         //Mover el personaje la derecha
         if (animator.GetBool("Correr") == true)
         {
-            transform.Translate(new Vector3(0.1f, 0.0f));
+            transform.Translate(new Vector3(0.2f, 0.0f));
         }
 
 
@@ -242,24 +218,32 @@ public class Rey : MonoBehaviour
             Debug.Log(" we Hit enemy:" + enemigo.name);
             //access to all enemy and damage them
             animator.SetTrigger("Atacar");
-            if (enemigo.attachedRigidbody.gameObject.tag == "Enemigo")
+
+            if (enemigo.attachedRigidbody.gameObject.transform.name == "ReyEnem(Clone)" | enemigo.attachedRigidbody.gameObject.transform.name == "ReyEnem")
             {
-                enemigo.GetComponent<Enemigo>().takeDamage(30);
+                //    Debug.Log("daño a rey");
+                //   Rey.GetComponent<Rey>().takeDamage(5);
+                enemigo.GetComponent<ReyEnem>().takeDamage(5);
             }
-            if (enemigo.attachedRigidbody.gameObject.tag == "Torre")
+            if (enemigo.attachedRigidbody.gameObject.transform.name == "MagoEnem(Clone)" | enemigo.attachedRigidbody.gameObject.transform.name == "MagoEnem")
+            {
+                //  Debug.Log("daño a mago");
+                enemigo.GetComponent<MagoEnem>().takeDamage(7);
+            }
+            if (enemigo.attachedRigidbody.gameObject.transform.name == "DemonEnem(Clone)" | enemigo.attachedRigidbody.gameObject.transform.name == "DemonEnem")
+            {
+                enemigo.GetComponent<DemonEnem>().takeDamage(5);
+            }
+            if (enemigo.attachedRigidbody.gameObject.transform.name == "EvilEnem(Clone)" | enemigo.attachedRigidbody.gameObject.transform.name == "EvilEnem")
+            {
+                enemigo.GetComponent<EvilEnem>().takeDamage(5);
+            }
+            if (enemigo.attachedRigidbody.gameObject.tag == "TorreEnemiga")
             {
                 enemigo.GetComponent<Torre>().takeDamage(30);
             }
 
 
-
-            /*   if(  enemigo.GetComponent<Enemigo>().healthBar.slider.value <= 0){
-                     isColliding = false;
-                     animator.SetBool("Correr", true);
-                     animator.SetBool("Atacar", false);
-                     animator.SetBool("Idle", false);
-
-                 }*/
         }
 
     }
@@ -298,7 +282,7 @@ public class Rey : MonoBehaviour
         if (DiamondCounter.valorDiamantes >= 50)
         {
           
-            GameObject.Instantiate(rey_prefab, new Vector3(-26.74f, -12.23f, -60.69f), transform.rotation);
+            GameObject.Instantiate(rey_prefab, new Vector3(-53.8f, -21.62f, -59.322f), transform.rotation);
             DiamondCounter.valorDiamantes -=50;
             gameObject.SetActive(true);
         }
